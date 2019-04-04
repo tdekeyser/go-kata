@@ -22,24 +22,34 @@ func Right(rover Rover) Rover {
 	return rover.turnRight()
 }
 
+const (
+	Xmax, Ymax = 10, 10
+)
+
+// In Go, operator % is the "remainder" after division, not the modulus.
+// We need a function to get the modulus of x with divisor n.
+func mod(x, n int) int {
+	return ((x % n) + n) % n
+}
+
 // #####
 // NORTH
 // #####
 
 type NorthRover struct {
-	x, y int
+	X, Y int
 }
 
 func (rover NorthRover) move(amount int) Rover {
-	return NorthRover{rover.x, rover.y + amount}
+	return NorthRover{rover.X, mod(rover.Y+amount, Ymax)}
 }
 
 func (rover NorthRover) turnLeft() Rover {
-	return WestRover{rover.x, rover.y}
+	return WestRover{rover.X, rover.Y}
 }
 
 func (rover NorthRover) turnRight() Rover {
-	return EastRover{rover.x, rover.y}
+	return EastRover{rover.X, rover.Y}
 }
 
 // #####
@@ -47,19 +57,19 @@ func (rover NorthRover) turnRight() Rover {
 // #####
 
 type SouthRover struct {
-	x, y int
+	X, Y int
 }
 
 func (rover SouthRover) move(amount int) Rover {
-	return SouthRover{rover.x, rover.y - amount}
+	return SouthRover{rover.X, mod(rover.Y-amount, Ymax)}
 }
 
 func (rover SouthRover) turnLeft() Rover {
-	return EastRover{rover.x, rover.y}
+	return EastRover{rover.X, rover.Y}
 }
 
 func (rover SouthRover) turnRight() Rover {
-	return WestRover{rover.x, rover.y}
+	return WestRover{rover.X, rover.Y}
 }
 
 // ####
@@ -67,19 +77,19 @@ func (rover SouthRover) turnRight() Rover {
 // ####
 
 type EastRover struct {
-	x, y int
+	X, Y int
 }
 
 func (rover EastRover) move(amount int) Rover {
-	return EastRover{rover.x + amount, rover.y}
+	return EastRover{mod(rover.X+amount, Xmax), rover.Y}
 }
 
 func (rover EastRover) turnLeft() Rover {
-	return NorthRover{rover.x, rover.y}
+	return NorthRover{rover.X, rover.Y}
 }
 
 func (rover EastRover) turnRight() Rover {
-	return SouthRover{rover.x, rover.y}
+	return SouthRover{rover.X, rover.Y}
 }
 
 // ####
@@ -87,17 +97,17 @@ func (rover EastRover) turnRight() Rover {
 // ####
 
 type WestRover struct {
-	x, y int
+	X, Y int
 }
 
 func (rover WestRover) move(amount int) Rover {
-	return WestRover{rover.x - amount, rover.y}
+	return WestRover{mod(rover.X-amount, Xmax), rover.Y}
 }
 
 func (rover WestRover) turnLeft() Rover {
-	return SouthRover{rover.x, rover.y}
+	return SouthRover{rover.X, rover.Y}
 }
 
 func (rover WestRover) turnRight() Rover {
-	return NorthRover{rover.x, rover.y}
+	return NorthRover{rover.X, rover.Y}
 }
