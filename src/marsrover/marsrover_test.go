@@ -6,36 +6,56 @@ import (
 )
 
 func TestForward(t *testing.T) {
-	assert.DeepEqual(t, Forward(NorthRover{0, 0}), NorthRover{0, 1})
-	assert.DeepEqual(t, Forward(SouthRover{0, 0}), SouthRover{0, 9})
-	assert.DeepEqual(t, Forward(EastRover{1, 1}), EastRover{2, 1})
-	assert.DeepEqual(t, Forward(WestRover{0, 0}), WestRover{9, 0})
+	north, _ := Forward(NorthRover{0, 0})
+	assert.DeepEqual(t, north, NorthRover{0, 1})
+
+	south, _ := Forward(SouthRover{0, 0})
+	assert.DeepEqual(t, south, SouthRover{0, 9})
+
+	east, _ := Forward(EastRover{1, 1})
+	assert.DeepEqual(t, east, EastRover{2, 1})
+
+	west, _ := Forward(WestRover{0, 0})
+	assert.DeepEqual(t, west, WestRover{9, 0})
 }
 
 func TestBackward(t *testing.T) {
-	assert.DeepEqual(t, Backward(NorthRover{0, 0}), NorthRover{0, 9})
-	assert.DeepEqual(t, Backward(SouthRover{2, 3}), SouthRover{2, 4})
-	assert.DeepEqual(t, Backward(EastRover{0, 0}), EastRover{9, 0})
-	assert.DeepEqual(t, Backward(WestRover{0, 0}), WestRover{1, 0})
+	north, _ := Backward(NorthRover{0, 0})
+	assert.DeepEqual(t, north, NorthRover{0, 9})
+
+	south, _ := Backward(SouthRover{2, 3})
+	assert.DeepEqual(t, south, SouthRover{2, 4})
+
+	east, _ := Backward(EastRover{0, 0})
+	assert.DeepEqual(t, east, EastRover{9, 0})
+
+	west, _ := Backward(WestRover{0, 0})
+	assert.DeepEqual(t, west, WestRover{1, 0})
 }
 
 func TestTurnLeft(t *testing.T) {
-	_, northToWestOk := Left(NorthRover{0, 0}).(WestRover)
+	rover, _ := Left(NorthRover{0, 0})
+	_, northToWestOk := rover.(WestRover)
 	assert.Assert(t, northToWestOk)
 }
 
 func TestTurnRight(t *testing.T) {
-	_, northToEastOk := Right(NorthRover{0, 0}).(EastRover)
+	rover, _ := Right(NorthRover{0, 0})
+	_, northToEastOk := rover.(EastRover)
 	assert.Assert(t, northToEastOk)
 }
 
-func TestCombination(t *testing.T) {
-	assert.DeepEqual(t,
-		Forward(Right(Backward(Right(Forward(NorthRover{0, 0}))))),
-		SouthRover{9, 0})
+func TestGridControl(t *testing.T) {
+	north, _ := Forward(NorthRover{0, 9})
+	assert.DeepEqual(t, north, NorthRover{0, 0})
+
+	east, _ := Backward(EastRover{0, 2})
+	assert.DeepEqual(t, east, EastRover{9, 2})
 }
 
-func TestGridControl(t *testing.T) {
-	assert.Equal(t, Forward(NorthRover{1, 9}), NorthRover{1, 0})
-	assert.Equal(t, Backward(EastRover{0, 2}), EastRover{9, 2})
+func TestObstableDetection(t *testing.T) {
+	east, err := Forward(EastRover{0, 0})
+
+	assert.Error(t, err, "obstacle detected")
+	assert.DeepEqual(t, east, EastRover{0, 0})
 }
