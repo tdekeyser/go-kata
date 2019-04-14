@@ -53,9 +53,16 @@ func TestGridControl(t *testing.T) {
 	assert.DeepEqual(t, east, EastRover{9, 2})
 }
 
-func TestObstableDetection(t *testing.T) {
-	east, err := Forward(EastRover{0, 0})
+func TestInstructions(t *testing.T) {
+	north := NorthRover{0, 0}
 
-	assert.Error(t, err, "obstacle detected")
-	assert.DeepEqual(t, east, EastRover{0, 0})
+	rover, e := Perform(north, Instructions{
+		Forward,
+		Forward,
+		Right,
+		Forward,
+	})
+
+	assert.NilError(t, e)
+	assert.DeepEqual(t, rover, EastRover{1, 2})
 }

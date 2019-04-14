@@ -1,52 +1,5 @@
 package marsrover
 
-import "fmt"
-
-const (
-	Xmax, Ymax = 10, 10
-)
-
-type Rover interface {
-	getPosition() (int, int)
-	move(amount int) Rover
-	turnLeft() Rover
-	turnRight() Rover
-}
-
-func Forward(rover Rover) (Rover, error) {
-	moved := rover.move(1)
-
-	if collidesWithObstacle(moved) {
-		return rover, fmt.Errorf("obstacle detected")
-	}
-
-	return moved, nil
-}
-
-func Backward(rover Rover) (Rover, error) {
-	return rover.move(-1), nil
-}
-
-func Left(rover Rover) (Rover, error) {
-	return rover.turnLeft(), nil
-}
-
-func Right(rover Rover) (Rover, error) {
-	return rover.turnRight(), nil
-}
-
-var obstacles = [3][2]int{{1, 0}, {3, 3}, {5, 9}}
-
-func collidesWithObstacle(rover Rover) bool {
-	for _, obstacle := range obstacles {
-		x, y := rover.getPosition()
-		if obstacle[0] == x && obstacle[1] == y {
-			return true
-		}
-	}
-	return false
-}
-
 // In Go, operator % is the "remainder" after division, not the modulus.
 // We need a function to get the modulus of x with divisor n.
 func mod(x, n int) int {
