@@ -1,5 +1,6 @@
 package sorts
 
+// Runs in O(n^2)
 func BubbleSort(l []int) []int {
 	var swapped bool
 
