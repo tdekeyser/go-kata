@@ -1,5 +1,6 @@
 package sorts
 
+// Divide and conquer algorithm : O(n log n)
 func QuickSort(l []int) []int {
 	if len(l) <= 1 {
 		return l
