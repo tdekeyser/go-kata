@@ -1,7 +1,7 @@
 package sorts
 
 // Runs in O(n^2)
-func BubbleSort(l []int) []int {
+func BubbleSort(l []int) {
 	var swapped bool
 
 	for i := 0; i < len(l)-1; i++ {
@@ -13,7 +13,6 @@ func BubbleSort(l []int) []int {
 	}
 
 	if swapped {
-		return BubbleSort(l)
+		BubbleSort(l)
 	}
-	return l
 }

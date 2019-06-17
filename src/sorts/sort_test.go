@@ -18,9 +18,9 @@ func TestBubblesort(t *testing.T) {
 	some_list := []int{5, 6, 3, 4, 1, 0, 9, 8, 7, 2}
 	target_list := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
-	assertArraysEqual(t, BubbleSort([]int{}), []int{})
-	assertArraysEqual(t, BubbleSort([]int{2, 1, 0}), []int{0, 1, 2})
-	assertArraysEqual(t, BubbleSort(some_list), target_list)
+	BubbleSort(some_list) // in-place algorithm
+
+	assertArraysEqual(t, some_list, target_list)
 }
 
 func assertArraysEqual(t *testing.T, x, y []int) {
