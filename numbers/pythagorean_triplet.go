@@ -6,7 +6,7 @@ import (
 
 // Runtime
 // O(n + n + (n*(n+1)/2)) = O(n^2), with n = len(arr)
-func ContainsPythagoreanTriplet(arr []int) bool {
+func containsPythagoreanTriplet(arr []int) bool {
 	square(arr)
 	sort.Ints(arr)
 

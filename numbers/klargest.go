@@ -2,10 +2,9 @@ package numbers
 
 import "sort"
 
-/*
-	Runtime: O(n*log(n)), for n = len(arr)
-*/
-func KLargest(k int, arr []int) []int {
+// Runtime
+// O(n*log(n)), for n = len(arr)
+func kLargest(k int, arr []int) []int {
 	sort.Ints(arr)
 
 	r := make([]int, 3)

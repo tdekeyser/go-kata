@@ -6,17 +6,17 @@ import (
 )
 
 func TestSumOfNumbers_zero(t *testing.T) {
-	AssertEqual(t, SumOfNumbers(0), 0)
+	AssertEqual(t, sumOfNumbers(0), 0)
 }
 
 func TestSumOfNumbers_singleDigit(t *testing.T) {
-	AssertEqual(t, SumOfNumbers(9), 9)
+	AssertEqual(t, sumOfNumbers(9), 9)
 }
 
 func TestSumOfNumbers_multipleDigits(t *testing.T) {
-	AssertEqual(t, SumOfNumbers(345), 12)
+	AssertEqual(t, sumOfNumbers(345), 12)
 }
 
 func TestSumOfNumbers_negative(t *testing.T) {
-	AssertEqual(t, SumOfNumbers(-345), 12)
+	AssertEqual(t, sumOfNumbers(-345), 12)
 }

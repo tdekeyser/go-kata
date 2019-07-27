@@ -1,11 +1,11 @@
 package numbers
 
-func SumOfNumbers(n int) int {
+func sumOfNumbers(n int) int {
 	if n < 0 {
-		return SumOfNumbers(-n)
+		return sumOfNumbers(-n)
 	}
 	if n < 10 {
 		return n
 	}
-	return n%10 + SumOfNumbers(n/10)
+	return n%10 + sumOfNumbers(n/10)
 }
