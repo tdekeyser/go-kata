@@ -1,25 +1,62 @@
 package stacks_and_queues
 
-type MinStack interface {
+type comparable interface {
+	compare(c interface{}) int
+}
+
+type minstack interface {
 	len() int
-	push(data interface{})
-	peek() interface{}
-	pop() interface{}
-	getMin() interface{}
+	push(data comparable)
+	peek() comparable
+	pop() comparable
+	getMin() comparable
 }
 
-type Stack struct {
-	data interface{}
-	next *Stack
+type stack struct {
+	data comparable
+	size int
+	min  comparable
+	next *stack
 }
 
-func New() *Stack {
-	return &Stack{nil, nil}
+// Runtime
+// O(1)
+func (s *stack) len() int {
+	return s.size
 }
 
-func (s *Stack) len() int {
-	if s.next == nil {
-		return 1
+// Runtime
+// O(1)
+func (s *stack) getMin() comparable {
+	return s.min
+}
+
+func (s *stack) peek() comparable {
+	return s.data
+}
+
+func (s *stack) pop() comparable {
+	d := s.data
+	*s = *s.next
+	return d
+}
+
+func (s *stack) push(data comparable) {
+	tmp := *s
+	*s = stack{
+		data: data,
+		size: tmp.size + 1,
+		min:  minimum(s.min, data),
+		next: &tmp,
 	}
-	return 1 + s.next.len()
+}
+
+func minimum(a, b comparable) comparable {
+	if a == nil {
+		return b
+	}
+	if a.compare(b) > 0 {
+		return b
+	}
+	return a
 }
